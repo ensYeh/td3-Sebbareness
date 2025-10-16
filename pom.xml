@@ -69,23 +69,23 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.4.1</version>
         </plugin>
-        //intégration de `checkstyle` pour la vérification
+        <!-- intégration de checkstyle pour la vérification -->
         <plugin>
-  <groupId>org.apache.maven.plugins</groupId>
-  <artifactId>maven-checkstyle-plugin</artifactId>
-  <version>3.2.1</version>
-  <configuration>
-    <configLocation>google_checks.xml</configLocation>
-  </configuration>
-  <executions>
-    <execution>
-      <phase>validate</phase>
-      <goals>
-        <goal>check</goal>
-      </goals>
-    </execution>
-  </executions>
-</plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.2.1</version>
+          <configuration>
+            <configLocation>google_checks.xml</configLocation>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>validate</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
