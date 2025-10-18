@@ -1,3 +1,7 @@
-www.uvsq.fr 193.51.31.90
-ecampus.uvsq.fr 193.51.25.12
 poste.uvsq.fr 193.51.31.154
+ComplementProgramation.uvsq.fr 192.169.0.1
+www.uvsq.fr 193.51.31.90
+www.sebbareness.dz 10.0.0.10
+sebbareness.uvsq.fr 10.0.0.254
+www.sebbareness-uvsq.fr 10.0.0.11
+ecampus.uvsq.fr 193.51.25.12

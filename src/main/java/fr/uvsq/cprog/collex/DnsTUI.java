@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /**
  * Interface utilisateur textuelle pour le DNS.
- * TUI = Text User Interface
+
  */
 public class DnsTUI {
   private final Scanner scanner;
@@ -20,7 +20,7 @@ public class DnsTUI {
   /**
    * Lit et analyse la prochaine commande saisie par l'utilisateur.
    *
-   * @return la ligne de commande saisie (sera transformée en Commande en Q4)
+   * @return la ligne de commande saisie 
    */
   public String nextCommande() {
     System.out.print("> ");
@@ -84,6 +84,72 @@ public class DnsTUI {
     for (DnsItem item : items) {
       affiche(item.toString());
     }
+  }
+
+  /**
+   * Parse une ligne de commande et retourne l'objet Commande correspondant.
+   *
+   * @param ligne la ligne de commande
+   * @param dns la base de données DNS
+   * @return la commande à exécuter, ou null si commande invalide
+   */
+  public Commande parseCommande(String ligne, Dns dns) {
+    if (ligne == null || ligne.isEmpty()) {
+      return null;
+    }
+
+    String[] parties = ligne.split("\\s+");
+
+    // Commande quit ou exit
+    if (parties[0].equalsIgnoreCase("quit") || parties[0].equalsIgnoreCase("exit")) {
+      return new QuitterCommande(this);
+    }
+
+    // Commande ls
+    if (parties[0].equalsIgnoreCase("ls")) {
+      if (parties.length < 2) {
+        afficheErreur("Usage: ls [-a] domaine");
+        return null;
+      }
+      
+      boolean trierParIp = false;
+      String domaine;
+      
+      if (parties[1].equals("-a")) {
+        trierParIp = true;
+        if (parties.length < 3) {
+          afficheErreur("Usage: ls -a domaine");
+          return null;
+        }
+        domaine = parties[2];
+      } else {
+        domaine = parties[1];
+      }
+      
+      return new ListerDomaineCommande(dns, this, domaine, trierParIp);
+    }
+
+    // Commande add
+    if (parties[0].equalsIgnoreCase("add")) {
+      if (parties.length != 3) {
+        afficheErreur("Usage: add adresse.ip nom.machine");
+        return null;
+      }
+      return new AjouterCommande(dns, this, parties[1], parties[2]);
+    }
+
+    // Recherche par IP (format: xxx.xxx.xxx.xxx)
+    if (parties[0].matches("\\d+\\.\\d+\\.\\d+\\.\\d+")) {
+      return new RechercherNomCommande(dns, this, parties[0]);
+    }
+
+    // Recherche par nom (contient au moins un point)
+    if (parties[0].contains(".")) {
+      return new RechercherIpCommande(dns, this, parties[0]);
+    }
+
+    afficheErreur("Commande non reconnue : " + ligne);
+    return null;
   }
 
   /**

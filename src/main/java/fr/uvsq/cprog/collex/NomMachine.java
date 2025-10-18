@@ -3,7 +3,7 @@ package fr.uvsq.cprog.collex;
 import java.util.Objects;
 
 /**
- * Représente un nom qualifié de machine (FQDN).
+ * Représente un nom qualifié de machine.
  */
 public class NomMachine implements Comparable<NomMachine> {
   private final String nomComplet;
